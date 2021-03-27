@@ -35,6 +35,7 @@ export default class ResponseHelper {
       data: result.data,
       err: null,
       count: result.count,
+      total: result.total,
     });
   }
 }

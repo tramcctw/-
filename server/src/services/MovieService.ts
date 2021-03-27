@@ -56,6 +56,7 @@ export class MovieService {
         count: 0,
         data: [],
         errors,
+        total: 0,
       };
     }
     const movies = await MovieModel.find({
@@ -65,11 +66,14 @@ export class MovieService {
     })
       .skip((condition.page - 1) * condition.limit)
       .limit(condition.limit);
+    const totalMovie = await MovieModel.find();
+    const total = totalMovie.length;
     const count = movies.length;
     return {
       count,
       data: movies,
       errors: [],
+      total,
     };
   }
 }

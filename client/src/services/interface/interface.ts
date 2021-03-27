@@ -12,6 +12,7 @@ export interface IResponsePageData<T> {
   data: T[];
   err: null;
   count: number;
+  total: number;
 }
 
 export interface IMovie {
