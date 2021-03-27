@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2016",    //编译的目标版本
+    "module": "commonjs",  //模块化标准
+    "outDir": "./dist",    //编译目标目录
+    "experimentalDecorators": true, //允许使用装饰器
+    "emitDecoratorMetadata": true,  // 将ts的类型约束作为装饰器放到元数据
+    "strictNullChecks": true,       // null undefiend 不能赋值给其他类型
+    "removeComments": true,          //移除注释
+    "noEmitOnError": true,        // 当发生错误时，不要生成结果
+    "lib": ["ESNext"],          // 环境
+    "esModuleInterop": true,     // 使用es与其他模块化交互
+    "skipLibCheck": true 
+  },
+  "include": ["./src/index.ts"]    //编译目录
+}
