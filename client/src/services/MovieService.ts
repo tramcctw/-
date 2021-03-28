@@ -5,7 +5,7 @@ import {
   IMovie,
   ISearchCondition,
   IResponsePageData,
-} from "./interface/interface";
+} from "./interface";
 
 export class MovieService {
   /**

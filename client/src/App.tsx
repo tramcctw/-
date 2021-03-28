@@ -1,16 +1,15 @@
 import React from 'react';
-import { MovieService } from "./services/MovieService";
+import Layout from './views/Layout'
+import { BrowserRouter as Router,Route } from 'react-router-dom'
+import store from './redux'
 
 function App() {
-
-  MovieService.find({}).then(res=>{
-    console.log(res);
-  })
-
   return (
-    <div>
-      <h1>hello</h1>
-    </div>
+    <Router>
+      <Route path="/" component={Layout}>
+      </Route>
+    </Router>
+    
   );
 }
 
