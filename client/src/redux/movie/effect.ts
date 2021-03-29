@@ -34,14 +34,17 @@ export const getConditionMovie = (actions$) => {
     ofType(appActions.getConditionMovies),
     mergeMap((action: IAction<string, any>) => {
       store.dispatch(appActions.setLoading({ isLoaing: true }));
-      return from(MovieService.find(store.getState().movie.condition)).pipe(
+      const condition = store.getState().movie.condition;
+      return from(MovieService.find(condition)).pipe(
         map((res) => {
           if (res.data) {
             setTimeout(() => {
               store.dispatch(
                 appActions.saveMovies({
                   movies: res.data,
-                  total: (res as any).total,
+                  total: condition.key
+                    ? (res as any).count
+                    : (res as any).total,
                 })
               );
               store.dispatch(appActions.setLoading({ isLoaing: false }));

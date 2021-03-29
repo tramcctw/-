@@ -71,6 +71,7 @@ export const MovieSlice = createSlice({
           key: action.payload.key ? action.payload.key : "",
         },
       };
+      console.log(newState.condition);
       newState.totalPage = Math.ceil(newState.total / newState.condition.limit);
       return {
         ...newState,

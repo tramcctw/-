@@ -1,7 +1,7 @@
 import React from "react";
 import { IMovieState } from "../redux/movie/slice";
 import { connect } from "react-redux";
-import { Button, Switch, Table, Modal } from "antd";
+import { Button, Switch, Table, Modal, Space, Input } from "antd";
 import { ColumnsType, TablePaginationConfig } from "antd/lib/table";
 import { IMovie } from "../services/interface";
 import { appActions, appMapDispatchProps } from "../redux/core";
@@ -10,6 +10,7 @@ import defaultImg from "../assets/defaultImg.jpg";
 import styled from "styled-components";
 import { SwitchType } from "../services/interface";
 import { NavLink } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
 
 const ImgContainer = styled.img`
   width: 50px;
@@ -26,8 +27,11 @@ function mapStateToProps(state: IInitAppState) {
 }
 
 class MovieTable extends React.Component<IMovieState & typeof appActions> {
+  state = {
+    inputMsg: ''
+  }
   componentDidMount() {
-    console.log(this.props.getConditionMovies());
+    this.props.getConditionMovies();
   }
 
   private confirm = (id: string) => {
@@ -40,6 +44,57 @@ class MovieTable extends React.Component<IMovieState & typeof appActions> {
       },
     });
   };
+
+  private clearInputText = (clearFilters) => {
+    clearFilters();
+    this.setState({
+      inputMsg: ''
+    }, () => {
+      this.handleSearch(true)
+    })
+  }
+
+  private handleSearch = (key: boolean) => {
+    console.log(this.state.inputMsg)
+    if (key) {
+      this.props.setCondition({ key: '' })
+    } else {
+      this.props.setCondition({ key: this.state.inputMsg })
+    }
+    this.props.getConditionMovies()
+  }
+
+  private getFilterDropDown({ setSelectedKeys, selectedKeys, confirm, clearFilters }) {
+    return (<div style={{ padding: 8 }}>
+      <Input
+        placeholder={`Search`}
+        style={{ width: 188, marginBottom: 8, display: 'block' }}
+        value={this.state.inputMsg}
+        onChange={(e) => {
+          this.setState({
+            inputMsg: e.target.value
+          })
+        }}
+        onPressEnter={() => { this.handleSearch(false) }}
+      />
+      <Space>
+        <Button
+          type="primary"
+          icon={<SearchOutlined />}
+          size="small"
+          style={{ width: 90 }}
+          onClick={(e) => {
+            this.handleSearch(false)
+          }}
+        >
+          搜索
+        </Button>
+        <Button size="small" onClick={() => { this.clearInputText(clearFilters) }} style={{ width: 90 }}>
+          重置
+        </Button>
+      </Space>
+    </div >)
+  }
 
   private getColumns(): ColumnsType<IMovie> {
     return [
@@ -57,6 +112,8 @@ class MovieTable extends React.Component<IMovieState & typeof appActions> {
       {
         title: "名称",
         dataIndex: "name",
+        filterDropdown: this.getFilterDropDown.bind(this),
+        filterIcon: <SearchOutlined />
       },
       {
         title: "地区",
