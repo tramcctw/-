@@ -7,6 +7,7 @@ import { IAction } from "./slice";
 import { appActions } from "../core";
 import store, { IInitAppState } from "../index";
 import { IChangeSwitchType } from "./slice";
+import { message } from "antd";
 
 export const getSingleMovie = (action$) => {
   return action$.pipe(
@@ -36,12 +37,17 @@ export const getConditionMovie = (actions$) => {
       return from(MovieService.find(store.getState().movie.condition)).pipe(
         map((res) => {
           if (res.data) {
-            return appActions.saveMovies({
-              movies: res.data,
-              total: (res as any).total,
-            });
+            setTimeout(() => {
+              store.dispatch(
+                appActions.saveMovies({
+                  movies: res.data,
+                  total: (res as any).total,
+                })
+              );
+              store.dispatch(appActions.setLoading({ isLoaing: false }));
+            }, 500);
           }
-          store.dispatch(appActions.setLoading({ isLoaing: false }));
+
           return appActions.transformAction();
         })
       );
@@ -61,6 +67,7 @@ export const deleteSingleMovie = (action$) => {
         map((res) => {
           if (res.data === "success") {
             store.dispatch(appActions.deleteMovie({ id: action.payload.id }));
+            message.success("删除成功!!");
           } else {
             // id无效
           }
@@ -82,13 +89,16 @@ export const saveOriginMovie = (action$) => {
       return from(MovieService.add(action.payload.movie)).pipe(
         map((res) => {
           if (!res.err) {
-            store.dispatch(
-              appActions.saveSingleMovie({ movie: action.payload.movie })
-            );
+            setTimeout(() => {
+              store.dispatch(
+                appActions.saveSingleMovie({ movie: action.payload.movie })
+              );
+              store.dispatch(appActions.setLoading({ isLoaing: false }));
+            }, 500);
           } else {
             // 条件不满足
           }
-          return appActions.setLoading({ isLoaing: false });
+          return appActions.transformAction();
         })
       );
     }),

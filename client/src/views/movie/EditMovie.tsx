@@ -2,17 +2,17 @@ import React from 'react'
 import { RouteChildrenProps } from 'react-router'
 
 interface IParams {
-    id:string
+    id: string
 }
 
-interface IMprops{
+interface IMprops {
 
 }
 
-function  EditMovie(props:RouteChildrenProps<IParams> & IMprops ) {
+function EditMovie(props: RouteChildrenProps<IParams> & IMprops) {
     console.log(props);
-    
-    return <h1>EditMovie</h1>
+
+    return <h1>编辑电影</h1>
 }
 
 export default EditMovie

@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `;
 
 const ContentMes = styled.div`
-    padding:1em;
+  padding: 1em;
 `;
 
 const HeaderTitle = styled.h1`
@@ -36,11 +36,11 @@ const _Layout = () => {
           </HeaderTitle>
         </Header>
         <Layout>
-          <Sider style={{backgroundColor:"#2a3d55"}}>
+          <Sider style={{ backgroundColor: "#2a3d55" }}>
             <Menu
               mode="inline"
               theme="dark"
-              style={{backgroundColor:"#2a3d55"}}
+              style={{ backgroundColor: "#2a3d55" }}
             >
               <Menu.Item key="1">
                 <NavLink to="/movie">电影列表</NavLink>
@@ -56,7 +56,7 @@ const _Layout = () => {
               </Menu.Item>
             </Menu>
           </Sider>
-          <Content>
+          <Content style={{ overflow: "auto" }}>
             <ContentMes>
               <Route path="/" component={Home} exact></Route>
               <Route path="/movie" component={MovieList} exact></Route>

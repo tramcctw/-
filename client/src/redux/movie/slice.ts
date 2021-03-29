@@ -58,7 +58,7 @@ export const MovieSlice = createSlice({
     }),
     saveMovies: (state, action: IAction<string, ISaveDatas>) => ({
       ...state,
-      datas: [...state.datas, ...action.payload.movies] as IMovie[],
+      datas: action.payload.movies,
       total: action.payload.total,
       totalPage: Math.ceil(action.payload.total / state.condition.limit),
     }),
