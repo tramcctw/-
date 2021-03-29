@@ -13,7 +13,13 @@ interface ISaveDatas {
   total: number;
 }
 
-interface IMovieState {
+export interface IChangeSwitchType {
+  type: string;
+  id: string;
+  checked: boolean;
+}
+
+export interface IMovieState {
   datas: IMovie[];
   condition: IMovieCondition;
   total: number;
@@ -52,7 +58,7 @@ export const MovieSlice = createSlice({
     }),
     saveMovies: (state, action: IAction<string, ISaveDatas>) => ({
       ...state,
-      datas: [...state.datas, action.payload.movies] as IMovie[],
+      datas: [...state.datas, ...action.payload.movies] as IMovie[],
       total: action.payload.total,
       totalPage: Math.ceil(action.payload.total / state.condition.limit),
     }),
@@ -77,15 +83,25 @@ export const MovieSlice = createSlice({
       totalPage: Math.ceil((state.total + 1) / state.condition.limit),
     }),
     getSingleMovie: (state, action: IAction<string, { id: string }>) => state,
-    getConditionMovies: (
-      state,
-      action: IAction<string, { condition: ISearchCondition }>
-    ) => state,
+    getConditionMovies: (state) => state,
     transformAction: (state) => state,
     deleteOriginMovie: (state, action: IAction<string, { id: string }>) =>
       state,
     saveOriginMovie: (state, action: IAction<string, { movie: IMovie }>) =>
       state,
+    setSwitchType: (state, action: IAction<string, IChangeSwitchType>) => {
+      const newDatas = state.datas.map((item) => {
+        const temp = Object.assign({}, item);
+        if (temp._id === action.payload.id) {
+          temp[action.payload.type] = action.payload.checked;
+        }
+        return temp;
+      });
+      return {
+        ...state,
+        datas: newDatas,
+      };
+    },
   },
 });
 

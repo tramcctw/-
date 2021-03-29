@@ -15,6 +15,12 @@ export interface IResponsePageData<T> {
   total: number;
 }
 
+export enum SwitchType {
+  isComming = "isComming",
+  isHot = "isHot",
+  isClassic = "isClassic",
+}
+
 export interface IMovie {
   _id?: string;
   name: String;

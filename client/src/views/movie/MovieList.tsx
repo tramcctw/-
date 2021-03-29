@@ -1,7 +1,3 @@
-import React from 'react'
+import MovieTable from "../../components/MovieTable";
 
-function  MovieList() {
-    return <h1>MovieList</h1>
-}
-
-export default MovieList
+export default MovieTable

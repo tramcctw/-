@@ -1,11 +1,12 @@
 import { ofType } from "redux-observable";
 import { from } from "rxjs";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { IMovie, ISearchCondition } from "../../services/interface";
+import { IMovie } from "../../services/interface";
 import { MovieService } from "../../services/MovieService";
 import { IAction } from "./slice";
 import { appActions } from "../core";
-import store from "../index";
+import store, { IInitAppState } from "../index";
+import { IChangeSwitchType } from "./slice";
 
 export const getSingleMovie = (action$) => {
   return action$.pipe(
@@ -30,14 +31,14 @@ export const getSingleMovie = (action$) => {
 export const getConditionMovie = (actions$) => {
   return actions$.pipe(
     ofType(appActions.getConditionMovies),
-    mergeMap((action: IAction<string, { condition: ISearchCondition }>) => {
+    mergeMap((action: IAction<string, any>) => {
       store.dispatch(appActions.setLoading({ isLoaing: true }));
-      return from(MovieService.find(action.payload.condition)).pipe(
+      return from(MovieService.find(store.getState().movie.condition)).pipe(
         map((res) => {
           if (res.data) {
             return appActions.saveMovies({
               movies: res.data,
-              total: res.total,
+              total: (res as any).total,
             });
           }
           store.dispatch(appActions.setLoading({ isLoaing: false }));
@@ -93,6 +94,26 @@ export const saveOriginMovie = (action$) => {
     }),
     catchError((err) => {
       return [];
+    })
+  );
+};
+
+export const setOriginSwitchType = (action$) => {
+  return action$.pipe(
+    ofType(appActions.setSwitchType),
+    mergeMap((action: IAction<string, IChangeSwitchType>) => {
+      const movieState: IInitAppState = store.getState();
+      let movie = null;
+      movieState.movie.datas.forEach((item) => {
+        if (item._id === action.payload.id) {
+          movie = item;
+        }
+      });
+      return from(MovieService.edit(action.payload.id, movie)).pipe(
+        map((res) => {
+          return appActions.transformAction();
+        })
+      );
     })
   );
 };

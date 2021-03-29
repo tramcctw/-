@@ -4,13 +4,15 @@ import {
   getConditionMovie,
   deleteSingleMovie,
   saveOriginMovie,
+  setOriginSwitchType,
 } from "./movie/effect";
 
 const rootEpic = combineEpics(
   getSingleMovie,
   getConditionMovie,
   deleteSingleMovie,
-  saveOriginMovie
+  saveOriginMovie,
+  setOriginSwitchType
 );
 
 export default rootEpic;

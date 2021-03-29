@@ -12,7 +12,7 @@ const movieSchema = new Mongoose.Schema<IMovie>(
     areas: [String],
     timeLong: Number,
     isHot: Boolean,
-    isComing: Boolean,
+    isComming: Boolean,
     isClassic: Boolean,
     description: String,
     poster: String,
