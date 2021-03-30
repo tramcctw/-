@@ -22,7 +22,7 @@ const ImgWrapper = styled.div`
 
 interface IImgProps {
     currImg?: string;
-    onChange?: (imgUrl: string) => void;
+    onChange: (imgUrl: string) => void;
 }
 
 function ImgUploader(props: IImgProps) {
@@ -63,7 +63,6 @@ function ImgUploader(props: IImgProps) {
      * 控制图片的上传
      */
     async function handleImgUpload(info: any) {
-        console.log(info);
         const form = new FormData();
         // 构建表单对象，包含请求信息
         form.append(info.filename, info.file);
