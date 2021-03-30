@@ -32,6 +32,7 @@ class MovieTable extends React.Component<IMovieState & typeof appActions> {
   }
   componentDidMount() {
     this.props.getConditionMovies();
+    this.props.setEditMovie({})
   }
 
   private confirm = (id: string) => {

@@ -82,8 +82,6 @@ export const MovieSlice = createSlice({
     saveSingleMovie: (state, action: IAction<string, { movie: IMovie }>) => ({
       ...state,
       editMovie: action.payload.movie,
-      total: state.total + 1,
-      totalPage: Math.ceil((state.total + 1) / state.condition.limit),
     }),
     getSingleMovie: (state, action: IAction<string, { id: string }>) => state,
     getConditionMovies: (state) => state,
@@ -97,6 +95,26 @@ export const MovieSlice = createSlice({
         const temp = Object.assign({}, item);
         if (temp._id === action.payload.id) {
           temp[action.payload.type] = action.payload.checked;
+        }
+        return temp;
+      });
+      return {
+        ...state,
+        datas: newDatas,
+      };
+    },
+    setEditMovie: (state, action: IAction<string, {}>) => ({
+      ...state,
+      editMovie: null,
+    }),
+    editSingleMovie: (
+      state,
+      action: IAction<string, { id: string; movie: IMovie }>
+    ) => {
+      const newDatas = state.datas.map((item) => {
+        let temp = Object.assign({}, item);
+        if (temp._id === action.payload.id) {
+          temp = action.payload.movie;
         }
         return temp;
       });

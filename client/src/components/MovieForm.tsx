@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, Checkbox, Row, Col, InputNumber, Switch } from 'antd'
+import { Button, Form, Input, Checkbox, Row, InputNumber, Switch, message } from 'antd'
 import ImgUpload from "./ImgUploader"
 import styled from "styled-components";
 import { connect } from 'react-redux'
@@ -18,30 +18,76 @@ interface IAllGroups {
     value: string
 }
 
-interface IPropsType {
+interface IPropsType extends RouteComponentProps {
     editMovie?: IMovie
+    onEditChange?: (values: IMovie) => void
 }
 
 function mapStateToProps(state: IInitAppState) {
     return {
-        editMovie: state.movie.editMovie
+        // editMovie: state.movie.editMovie
     };
 }
 
-function MovieForm(props: IPropsType & Partial<RouteComponentProps & typeof appActions>) {
+function MovieForm(props: IPropsType & Partial<typeof appActions>) {
 
     const [imgUrl, setImgUrl] = useState<string>("")
-    const [commingChecked, setCommingChecked] = useState<boolean>(false)
-    const [classicChecked, setClassicChecked] = useState<boolean>(false)
-    const [hotChecked, setHotChecked] = useState<boolean>(false)
+    const [commingChecked, setCommingChecked] = useState<boolean>(props.editMovie?.isComming ? props.editMovie.isComming : false)
+    const [classicChecked, setClassicChecked] = useState<boolean>(props.editMovie?.isClassic ? props.editMovie.isClassic : false)
+    const [hotChecked, setHotChecked] = useState<boolean>(props.editMovie?.isHot ? props.editMovie?.isHot : false)
+    const [types, setTypes] = useState<string[]>(props.editMovie?.types ? props.editMovie.types : [])
+    const [areas, setAreas] = useState<string[]>(props.editMovie?.areas ? props.editMovie.areas : [])
 
     function handleSubmit(values: IMovie) {
-        props.saveOriginMovie({ movie: values })
+        if (values.name === "") {
+            message.error('请填写电影名字...')
+            return
+        }
+        if (areas.length === 0) {
+            message.error('请选择地区...')
+            return
+        }
+        if (types.length === 0) {
+            message.error('请选择类型...')
+            return
+        }
+
+        if (values.timeLong === 0) {
+            message.error('请填写时长...')
+            return
+        }
+        values.areas = areas
+        values.types = types
+        values.poster = imgUrl
+        if (props.onEditChange) {
+            props.onEditChange(values)
+        } else {
+            props.saveOriginMovie({ movie: values })
+        }
         props.history.push('/movie')
     }
 
     function handleChange(imgUrl: string) {
         setImgUrl(imgUrl)
+    }
+
+    function checkedChange(value: string, checked: boolean) {
+        const totalAreas = ['中国大陆', '美国', "香港", "韩国"]
+        if (checked) {
+            if (totalAreas.includes(value)) {
+                setAreas([...areas, value])
+            } else {
+                setTypes([...types, value])
+            }
+        } else {
+            if (totalAreas.includes(value)) {
+                const temp = areas.filter(item => item !== value)
+                setAreas(temp)
+            } else {
+                const temp = types.filter(item => item !== value)
+                setTypes(temp)
+            }
+        }
     }
 
     function getCheckBox(key: boolean) {
@@ -57,8 +103,8 @@ function MovieForm(props: IPropsType & Partial<RouteComponentProps & typeof appA
                     value: '美国'
                 },
                 {
-                    label: "中国香港",
-                    value: "中国香港"
+                    label: "香港",
+                    value: "香港"
                 },
                 {
                     label: "韩国",
@@ -86,11 +132,18 @@ function MovieForm(props: IPropsType & Partial<RouteComponentProps & typeof appA
             ]
         }
         return AllTypes.map(item => (
-            <Col span={8} key={item.label}>
-                <Checkbox value={item.value}>
-                    {item.label}
-                </Checkbox>
-            </Col>
+
+            <Checkbox
+                key={item.value}
+                value={item.value}
+                checked={areas.includes(item.value) || types.includes(item.value)}
+                onChange={(e) => {
+                    checkedChange(item.value, e.target.checked)
+                }}
+            >
+                {item.label}
+            </Checkbox>
+
         ))
     }
 
@@ -103,39 +156,36 @@ function MovieForm(props: IPropsType & Partial<RouteComponentProps & typeof appA
             <Form.Item
                 label="电影名称"
                 name="name"
-                rules={[{ required: true, message: '请填写电影名称' }]}
+                initialValue={props.editMovie?.name ? props.editMovie.name : ""}
             >
-                <Input value={ } onChange={ }></Input>
+                <Input></Input>
             </Form.Item>
             {/* 内部监听onChange事件 */}
             <Form.Item label="电影封面" name="poster" initialValue={''}>
-                <ImgUpload onChange={handleChange} currImg={imgUrl} />
+                <ImgUpload onChange={handleChange} currImg={props.editMovie?.poster ? props.editMovie.poster : ''} />
             </Form.Item>
             <Form.Item
                 name="areas"
                 label="地区"
-                rules={[{ required: true, message: "请选择地区" }]}
+                initialValue={[]}
             >
-                <Checkbox.Group>
-                    <Row>
-                        {getCheckBox(true)}
-                    </Row>
-                </Checkbox.Group>
+                <Row>
+                    {getCheckBox(true)}
+                </Row>
             </Form.Item>
             <Form.Item
-                name="types" label="类型"
-                rules={[{ required: true, message: '请选择类型' }]}
+                name="types"
+                label="类型"
+                initialValue={[]}
             >
-                <Checkbox.Group>
-                    <Row>
-                        {getCheckBox(false)}
-                    </Row>
-                </Checkbox.Group>
+                <Row>
+                    {getCheckBox(false)}
+                </Row>
             </Form.Item>
             <Form.Item
                 name="timeLong"
                 label="时长(分钟)"
-                rules={[{ required: true, message: '请选择时长' }]}
+                initialValue={props.editMovie?.timeLong ? props.editMovie.timeLong : 1}
             >
                 <InputNumber min={1} />
             </Form.Item>
@@ -163,7 +213,7 @@ function MovieForm(props: IPropsType & Partial<RouteComponentProps & typeof appA
             <Form.Item
                 name="description"
                 label="描述"
-                initialValue={''}
+                initialValue={props.editMovie?.description ? props.editMovie.description : ''}
             >
                 <Input.TextArea />
             </Form.Item>

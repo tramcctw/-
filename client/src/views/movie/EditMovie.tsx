@@ -25,9 +25,17 @@ function EditMovie(props: RouteChildrenProps<IParams> & IMyprops & typeof appAct
     useEffect(() => {
         props.getSingleMovie({ id: props.match.params.id })
         return () => { }
-    })
+    }, [])
 
-    return <MovieForm />
+    function onEditChange(values: IMovie): void {
+        props.editSingleMovie({ id: props.match.params.id, movie: values })
+    }
+
+    return <>
+        {
+            props.editMovie && <MovieForm onEditChange={onEditChange} editMovie={props.editMovie} />
+        }
+    </>
 }
 
 export default connect(mapStateToProps, appMapDispatchProps)(EditMovie)

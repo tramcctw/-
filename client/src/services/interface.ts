@@ -28,7 +28,7 @@ export enum SwitchType {
 
 export interface IMovie {
   _id?: string;
-  name: String;
+  name: string;
   types: string[];
   areas: string[];
   timeLong: number;

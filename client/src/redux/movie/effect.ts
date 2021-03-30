@@ -132,3 +132,18 @@ export const setOriginSwitchType = (action$) => {
     })
   );
 };
+
+export const setEditMovie = (action$) => {
+  return action$.pipe(
+    ofType(appActions.editSingleMovie),
+    mergeMap((action: IAction<string, { id: string; movie: IMovie }>) => {
+      return from(
+        MovieService.edit(action.payload.id, action.payload.movie)
+      ).pipe(
+        map((res) => {
+          return appActions.transformAction();
+        })
+      );
+    })
+  );
+};

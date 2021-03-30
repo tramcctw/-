@@ -5,6 +5,7 @@ import {
   deleteSingleMovie,
   saveOriginMovie,
   setOriginSwitchType,
+  setEditMovie,
 } from "./movie/effect";
 
 const rootEpic = combineEpics(
@@ -12,7 +13,8 @@ const rootEpic = combineEpics(
   getConditionMovie,
   deleteSingleMovie,
   saveOriginMovie,
-  setOriginSwitchType
+  setOriginSwitchType,
+  setEditMovie
 );
 
 export default rootEpic;
