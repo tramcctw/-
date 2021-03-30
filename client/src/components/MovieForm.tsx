@@ -162,7 +162,7 @@ function MovieForm(props: IPropsType & Partial<typeof appActions>) {
             </Form.Item>
             {/* 内部监听onChange事件 */}
             <Form.Item label="电影封面" name="poster" initialValue={''}>
-                <ImgUpload onChange={handleChange} currImg={props.editMovie?.poster ? props.editMovie.poster : ''} />
+                <ImgUpload onChange={handleChange} currImg={props.editMovie?.poster ? props.editMovie.poster : imgUrl} />
             </Form.Item>
             <Form.Item
                 name="areas"

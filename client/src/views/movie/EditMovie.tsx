@@ -25,6 +25,7 @@ function EditMovie(props: RouteChildrenProps<IParams> & IMyprops & typeof appAct
     useEffect(() => {
         props.getSingleMovie({ id: props.match.params.id })
         return () => { }
+        /* eslint-disable */
     }, [])
 
     function onEditChange(values: IMovie): void {

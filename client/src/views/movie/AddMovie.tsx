@@ -19,6 +19,7 @@ function AddMovie(props: typeof appActions & IMyprops) {
     useEffect(() => {
         props.setEditMovie({})
         return () => { }
+        /* eslint-disable */
     }, [])
     return <MovieForm editMovie={null}></MovieForm>
 }
