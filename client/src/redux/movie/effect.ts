@@ -97,9 +97,11 @@ export const saveOriginMovie = (action$) => {
                 appActions.saveSingleMovie({ movie: action.payload.movie })
               );
               store.dispatch(appActions.setLoading({ isLoaing: false }));
+              message.success("添加成功...");
             }, 500);
           } else {
             // 条件不满足
+            message.error("添加失败...");
           }
           return appActions.transformAction();
         })

@@ -21,6 +21,7 @@ export interface IChangeSwitchType {
 
 export interface IMovieState {
   datas: IMovie[];
+  editMovie: IMovie;
   condition: IMovieCondition;
   total: number;
   isLoading: boolean;
@@ -40,6 +41,7 @@ const initialState: IMovieState = {
   total: 0,
   isLoading: false,
   totalPage: 0,
+  editMovie: null,
 };
 
 export const MovieSlice = createSlice({
@@ -79,7 +81,7 @@ export const MovieSlice = createSlice({
     },
     saveSingleMovie: (state, action: IAction<string, { movie: IMovie }>) => ({
       ...state,
-      datas: [...state.datas, action.payload.movie],
+      editMovie: action.payload.movie,
       total: state.total + 1,
       totalPage: Math.ceil((state.total + 1) / state.condition.limit),
     }),

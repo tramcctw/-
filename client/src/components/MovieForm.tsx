@@ -2,26 +2,42 @@ import React, { useState } from 'react'
 import { Button, Form, Input, Checkbox, Row, Col, InputNumber, Switch } from 'antd'
 import ImgUpload from "./ImgUploader"
 import styled from "styled-components";
+import { connect } from 'react-redux'
+import { RouteComponentProps, withRouter } from 'react-router'
+import { appMapDispatchProps, appActions } from '../redux/core'
+import { IInitAppState } from '../redux';
+import { IMovie } from '../services/interface';
+
 
 const EditWrapper = styled.div`
     padding-left:100px;
 `
-
 
 interface IAllGroups {
     label: string;
     value: string
 }
 
-export default function MovieForm() {
+interface IPropsType {
+    editMovie?: IMovie
+}
+
+function mapStateToProps(state: IInitAppState) {
+    return {
+        editMovie: state.movie.editMovie
+    };
+}
+
+function MovieForm(props: IPropsType & Partial<RouteComponentProps & typeof appActions>) {
 
     const [imgUrl, setImgUrl] = useState<string>("")
     const [commingChecked, setCommingChecked] = useState<boolean>(false)
     const [classicChecked, setClassicChecked] = useState<boolean>(false)
     const [hotChecked, setHotChecked] = useState<boolean>(false)
 
-    function handleSubmit(values: any) {
-        console.log(values)
+    function handleSubmit(values: IMovie) {
+        props.saveOriginMovie({ movie: values })
+        props.history.push('/movie')
     }
 
     function handleChange(imgUrl: string) {
@@ -89,7 +105,7 @@ export default function MovieForm() {
                 name="name"
                 rules={[{ required: true, message: '请填写电影名称' }]}
             >
-                <Input></Input>
+                <Input value={ } onChange={ }></Input>
             </Form.Item>
             {/* 内部监听onChange事件 */}
             <Form.Item label="电影封面" name="poster" initialValue={''}>
@@ -160,3 +176,5 @@ export default function MovieForm() {
     </EditWrapper>
 
 }
+
+export default connect(mapStateToProps, appMapDispatchProps)(withRouter(MovieForm))
