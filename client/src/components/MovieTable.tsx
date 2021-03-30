@@ -56,7 +56,6 @@ class MovieTable extends React.Component<IMovieState & typeof appActions> {
   }
 
   private handleSearch = (key: boolean) => {
-    console.log(this.state.inputMsg)
     if (key) {
       this.props.setCondition({ key: '' })
     } else {

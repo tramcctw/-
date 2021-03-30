@@ -13,6 +13,6 @@ app.use("/api/movie", movieRoute);
 
 app.use("/api/upload", fileRoute);
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("listener...");
 });
