@@ -1,6 +1,12 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import ImgUploader from '../components/ImgUploader'
 
 export default function Home() {
-    return <h1>hello</h1>
+
+    const [imgUrl, setImgUrl] = useState<string>("")
+
+    function handleChange(imgUrl: string) {
+        setImgUrl(imgUrl)
+    }
+    return <ImgUploader currImg={imgUrl} onChange={handleChange}></ImgUploader>
 }

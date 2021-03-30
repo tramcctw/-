@@ -5,7 +5,7 @@ import ResponseHelper from "../utils/ResponseHelper";
 
 const fileRoute = express.Router();
 
-const extname = [".png", ".jpg", ".gif", ".bmp", ".jiff"];
+const extname = [".png", ".jpg", ".gif", ".bmp", ".jiff", ".webp"];
 
 const storage = multer.diskStorage({
   destination: path.resolve(__dirname, "../../public/upload"),

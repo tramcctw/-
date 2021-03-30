@@ -8,6 +8,11 @@ export interface IResponseData<T> {
   data: T;
 }
 
+export interface IUploadResponse {
+  err: string | null;
+  data: string | null;
+}
+
 export interface IResponsePageData<T> {
   data: T[];
   err: null;
