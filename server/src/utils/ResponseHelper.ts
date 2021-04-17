@@ -2,7 +2,7 @@ import { Response } from "express";
 import { ISeacrchRes } from "../interface/interface";
 
 export default class ResponseHelper {
-  public static sendError(err: string[] | string, res: Response) {
+  public static sendError(err: string[] | string | null, res: Response) {
     let result;
     if (Array.isArray(err)) {
       result = {

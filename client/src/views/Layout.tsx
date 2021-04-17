@@ -43,19 +43,19 @@ const _Layout = () => {
               style={{ backgroundColor: "#2a3d55" }}
             >
               <Menu.Item key="1">
-                <NavLink to="/movie">电影列表</NavLink>
+                <NavLink to="/layout/movie">电影列表</NavLink>
               </Menu.Item>
               <Menu.Item key="2">
-                <NavLink to="/movie/add">添加电影</NavLink>
+                <NavLink to="/layout/movie/add">添加电影</NavLink>
               </Menu.Item>
             </Menu>
           </Sider>
           <Content style={{ overflow: "auto" }}>
             <ContentMes>
-              <Route path="/" component={Home} exact></Route>
-              <Route path="/movie" component={MovieList} exact></Route>
-              <Route path="/movie/add" component={AddMovie}></Route>
-              <Route path="/movie/edit/:id" component={EditMovie}></Route>
+              <Route path="/layout" component={Home} exact></Route>
+              <Route path="/layout/movie" component={MovieList} exact></Route>
+              <Route path="/layout/movie/add" component={AddMovie}></Route>
+              <Route path="/layout/movie/edit/:id" component={EditMovie}></Route>
             </ContentMes>
           </Content>
         </Layout>
