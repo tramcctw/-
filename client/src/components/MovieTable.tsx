@@ -196,7 +196,7 @@ class MovieTable extends React.Component<IMovieState & typeof appActions> {
         render: (id: string) => {
           return (
             <>
-              <NavLink to={`/movie/edit/${id}`}>
+              <NavLink to={`/layout/movie/edit/${id}`}>
                 <Button type="primary">编辑</Button>
               </NavLink>
 

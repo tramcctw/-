@@ -1,8 +1,10 @@
 import { Dispatch } from "redux";
-import { actions } from "../movie/slice";
+import { actions as movieActions } from "../movie/slice";
+import { actions as loginActions } from '../login/slice'
 
 export const appActions = {
-  ...actions,
+  ...movieActions,
+  ...loginActions
 };
 
 export function appMapDispatchProps(dispatch: Dispatch) {

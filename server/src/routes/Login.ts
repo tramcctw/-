@@ -5,17 +5,22 @@ import ResponseHelper from "../utils/ResponseHelper";
 
 const loginRoute = express.Router();
 
+// 登录
 loginRoute.post('/', async (req, res) => {
     const result = await LoginServ.findAdmin(req.body)
-    if (Array.isArray(result) || result === null) {
-        ResponseHelper.sendError(result, res)
+    if (result.length === 0) {
+        // 无法登录
+        ResponseHelper.sendError(['用户不存在'], res)
     } else {
+        // 可以登录
         ResponseHelper.sendData(result, res)
     }
 })
 
+// 注册
 loginRoute.put('/', async (req, res) => {
     const result = await LoginServ.addAdmin(req.body)
+    console.log(result)
     if (Array.isArray(result)) {
         ResponseHelper.sendError(result, res)
     } else {

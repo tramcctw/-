@@ -42,7 +42,8 @@ interface IPropsType extends RouteComponentProps {
 
 function mapStateToProps(state: IInitAppState) {
     return {
-        isLogin: state.login.isLogin
+        isLogin: state.login.isLogin,
+        isRegister: state.login.isRegister
     }
 }
 
@@ -52,23 +53,20 @@ function Login(props: IPropsType & ILoginState & typeof appActions) {
     const [userPwd, setUserPwd] = useState<string>("")
 
     useEffect(() => {
-        sessionStorage.isLogin = false
-        if (props.isLogin) {
-            props.history.push('/layout')
-            sessionStorage.isLogin = true
+        if (props.isRegister) {
+            props.history.push('/')
         }
         return () => {
-            props.changeLoginState({ isLogin: false })
+            props.changeRegisterState({ isRegister: false })
         }
-    }, [props.isLogin])
-
+    }, [props.isRegister])
 
     function handleSubmit(value: ILoginDes) {
-        props.login(value)
+        props.register(value)
     }
 
-    function handleRegister() {
-        props.history.push('/register')
+    function backLoginPage() {
+        props.history.push('/')
     }
 
     const tailLayout = {
@@ -78,8 +76,8 @@ function Login(props: IPropsType & ILoginState & typeof appActions) {
     return (
         <>
             <LoginWrapper>
-                <Title>欢迎来到电影管理系统</Title>
-                <Logo src={logo} />
+                <Title>欢迎来到注册页面</Title>
+                <Logo src={logo} onClick={backLoginPage} />
                 <Content>
                     <Form
                         name="basic"
@@ -111,10 +109,7 @@ function Login(props: IPropsType & ILoginState & typeof appActions) {
                             />
                         </Form.Item>
                         <Form.Item {...tailLayout}>
-                            <Button type="primary" htmlType="submit">
-                                登录
-                            </Button>
-                            <Button type="primary" onClick={handleRegister} style={{ marginLeft: "45px" }}>
+                            <Button type="default" htmlType="submit" style={{ width: "150px" }}>
                                 注册
                             </Button>
                         </Form.Item>

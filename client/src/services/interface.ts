@@ -44,3 +44,9 @@ export interface ISearchCondition {
   limit?: number;
   key?: string;
 }
+
+export interface ILoginRes {
+  _id?: string;
+  username: string;
+  password: string;
+}

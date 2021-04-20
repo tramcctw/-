@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsInt, Min } from "class-validator";
+import { IsInt, Max, Min } from "class-validator";
 import BaseSet from "./BaseSet";
 
 export default class SearchCondition extends BaseSet {

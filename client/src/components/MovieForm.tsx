@@ -64,7 +64,7 @@ function MovieForm(props: IPropsType & Partial<typeof appActions>) {
         } else {
             props.saveOriginMovie({ movie: values })
         }
-        props.history.push('/movie')
+        props.history.push('/layout/movie')
     }
 
     function handleChange(imgUrl: string) {
