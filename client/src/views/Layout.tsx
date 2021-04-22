@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { NavLink, Route, RouteComponentProps } from "react-router-dom";
-import Home from "./Home";
+import Notes from "./notes/Notes";
 import AddMovie from "./movie/AddMovie";
 import EditMovie from "./movie/EditMovie";
 import MovieList from "./movie/MovieList";
@@ -10,7 +10,7 @@ import { Layout, Menu, message } from "antd";
 const { Header, Sider, Content } = Layout;
 
 const Wrapper = styled.div`
-  width: 100vw;
+  min-width: 90vw;
   height: 100vh;
   display: flex;
 `;
@@ -63,9 +63,9 @@ const _Layout = (props: RouteComponentProps) => {
               </Menu.Item>
             </Menu>
           </Sider>
-          <Content style={{ overflow: "auto" }}>
+          <Content style={{ overflow: "auto", minWidth: "80vw", minHeight: "90vh" }}>
             <ContentMes>
-              <Route path="/layout" component={Home} exact></Route>
+              <Route path="/layout" component={Notes} exact></Route>
               <Route path="/layout/movie" component={MovieList} exact></Route>
               <Route path="/layout/movie/add" component={AddMovie}></Route>
               <Route path="/layout/movie/edit/:id" component={EditMovie}></Route>
