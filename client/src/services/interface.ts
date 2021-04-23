@@ -50,3 +50,8 @@ export interface ILoginRes {
   username: string;
   password: string;
 }
+
+export interface INotes {
+  _id?: string;
+  content: string;
+}

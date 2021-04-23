@@ -1,6 +1,7 @@
 import Mongoose from "mongoose";
 import MovieModel from "./MovieSchema";
 import AdminModel from './AdminSchema'
+import NotesModel from './NotesSchema'
 
 Mongoose.connect("mongodb://localhost:27017/moviedb", {
   useNewUrlParser: true,
@@ -9,4 +10,4 @@ Mongoose.connect("mongodb://localhost:27017/moviedb", {
   console.log("数据库已连接");
 });
 
-export { MovieModel, AdminModel };
+export { MovieModel, AdminModel, NotesModel };

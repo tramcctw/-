@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Input, Form, Button } from 'antd'
 import styled from 'styled-components'
-import del from '../../assets/delete.svg'
 
 const FormWrapper = styled.div`
     position:fixed;
@@ -26,10 +25,10 @@ const Content = styled.li`
     list-style:none;
     padding:10px;
     margin-bottom:20px;
-    border-left:8px solid #f40;
-    border-top:1px dashed #f90;
-    border-bottom:1px dashed #f90;
-    border-right:1px dashed #f90;
+    border-left:8px solid #008c8c;
+    border-top:1px dashed rgb(42, 61, 85);
+    border-bottom:1px dashed rgb(42, 61, 85);
+    border-right:1px dashed rgb(42, 61, 85);
     box-sizing:border-box;
     :last-child{
         margin-bottom:50px;
