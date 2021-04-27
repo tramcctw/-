@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const ContentMes = styled.div`
-  /* padding: 1em; */
+  padding: 1em;
 `;
 
 const HeaderTitle = styled.h1`
