@@ -8,6 +8,7 @@ import {
   setEditMovie,
 } from "./movie/effect";
 import { login, register } from './login/effect'
+import { getAllContent, addOriginContent, deleteContent } from './notes/effect'
 
 const rootEpic = combineEpics(
   getSingleMovie,
@@ -17,7 +18,10 @@ const rootEpic = combineEpics(
   setOriginSwitchType,
   setEditMovie,
   login,
-  register
+  register,
+  getAllContent,
+  addOriginContent,
+  deleteContent
 );
 
 export default rootEpic;

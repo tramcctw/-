@@ -20,7 +20,6 @@ loginRoute.post('/', async (req, res) => {
 // 注册
 loginRoute.put('/', async (req, res) => {
     const result = await LoginServ.addAdmin(req.body)
-    console.log(result)
     if (Array.isArray(result)) {
         ResponseHelper.sendError(result, res)
     } else {

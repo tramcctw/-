@@ -34,7 +34,6 @@ export const register = (action$) => {
         mergeMap((action: IAction<string, { username: string, password: string }>) => {
             return from(LoginService.register(action.payload)).pipe(
                 map((res) => {
-                    console.log(res)
                     if (res.err) {
                         message.warn('用户已存在！！')
                         return appActions.changeRegisterState({ isRegister: false })

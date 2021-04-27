@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Input, Form, Button } from 'antd'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { IInitAppState } from '../../redux'
+import { appActions, appMapDispatchProps } from "../../redux/core";
+import { RouteComponentProps } from 'react-router'
 
 const FormWrapper = styled.div`
     position:fixed;
@@ -25,10 +29,7 @@ const Content = styled.li`
     list-style:none;
     padding:10px;
     margin-bottom:20px;
-    border-left:8px solid #008c8c;
-    border-top:1px dashed rgb(42, 61, 85);
-    border-bottom:1px dashed rgb(42, 61, 85);
-    border-right:1px dashed rgb(42, 61, 85);
+    background-color:#fff;
     box-sizing:border-box;
     :last-child{
         margin-bottom:50px;
@@ -51,10 +52,27 @@ const Dele = styled.span`
     cursor:pointer;
 `
 
-export default function Notes() {
+export interface IPropsType extends RouteComponentProps {
+
+}
+
+
+function mapStateToProps(state: IInitAppState) {
+    return {
+        data: state.notes.data
+    }
+}
+
+function Notes(props: IPropsType & ReturnType<typeof mapStateToProps> & typeof appActions) {
     const { TextArea } = Input
-    const [showNotes, setShowNotes] = useState<string[]>(['ddd', 'yyy', 'kfh llo', 'xxxxx', 'yyyy', 'kkk', 'ddd', 'sss', 'xxxx'])
     const [noteVal, setNoteVal] = useState<string>('')
+
+    useEffect(() => {
+        props.getAllContent()
+        return () => { }
+        /* eslint-disable */
+    }, [])
+
     const tailLayout = {
         wrapperCol: { offset: 8, span: 16 },
     };
@@ -65,19 +83,17 @@ export default function Notes() {
             return;
         }
         setNoteVal('')
-        setShowNotes([...showNotes, str])
+        props.addOriginContent({ content: str })
     }
 
     function handleDelete(index: number) {
-        showNotes.splice(index, 1)
-        setShowNotes([...showNotes])
-
+        props.deleteContent({ id: props.data[index]._id })
     }
 
     return <>
         <ContentWrapper>
             {
-                showNotes.map((item, index) => (<Content key={index}>{item}<Dele onClick={() => { handleDelete(index) }} >x</Dele></Content>))
+                props.data.map((item, index) => (<Content key={index}>{item.content}<Dele onClick={() => { handleDelete(index) }} >x</Dele></Content>))
             }
         </ContentWrapper>
         <FormWrapper>
@@ -94,3 +110,5 @@ export default function Notes() {
         </FormWrapper>
     </>
 }
+
+export default connect(mapStateToProps, appMapDispatchProps)(Notes)

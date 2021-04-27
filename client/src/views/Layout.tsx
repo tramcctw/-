@@ -32,7 +32,7 @@ const _Layout = (props: RouteComponentProps) => {
       props.history.push('/')
       message.warn('请登录账号！！')
     }
-
+    /* eslint-disable */
   }, [])
 
   return (
