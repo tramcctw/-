@@ -6,6 +6,7 @@ import AddMovie from "./movie/AddMovie";
 import EditMovie from "./movie/EditMovie";
 import MovieList from "./movie/MovieList";
 import { Layout, Menu, message } from "antd";
+import "../css/index.css"
 
 const { Header, Sider, Content } = Layout;
 
@@ -63,7 +64,7 @@ const _Layout = (props: RouteComponentProps) => {
               </Menu.Item>
             </Menu>
           </Sider>
-          <Content style={{ overflow: "auto", minWidth: "80vw", minHeight: "70vh" }}>
+          <Content className="scoll" style={{ overflowY: "auto", minWidth: "80vw", minHeight: "70vh" }}>
             <ContentMes>
               <Route path="/layout" component={Notes} exact></Route>
               <Route path="/layout/movie" component={MovieList} exact></Route>
