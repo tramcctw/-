@@ -60,6 +60,7 @@ function Login(props: IPropsType & ILoginState & typeof appActions) {
         return () => {
             props.changeLoginState({ isLogin: false })
         }
+        /* eslint-disable */
     }, [props.isLogin])
 
 

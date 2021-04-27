@@ -7,15 +7,22 @@ import { appActions, appMapDispatchProps } from "../../redux/core";
 import { RouteComponentProps } from 'react-router'
 
 const FormWrapper = styled.div`
-    position:fixed;
-    bottom:50px;
-    left:300px;
+    position:relative;
+    top:30px;
+    left:-130px;
     width:500px;
 `
+
+const Wrapper = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+`
+
 const ContentWrapper = styled.ul`
-    left:300px;
-    position:absolute; 
-    max-height:400px;
+    margin-top:50px;
+    max-height:350px;
     width:750px;
     overflow:auto;
     padding:0;
@@ -90,7 +97,7 @@ function Notes(props: IPropsType & ReturnType<typeof mapStateToProps> & typeof a
         props.deleteContent({ id: props.data[index]._id })
     }
 
-    return <>
+    return <Wrapper>
         <ContentWrapper>
             {
                 props.data.map((item, index) => (<Content key={index}>{item.content}<Dele onClick={() => { handleDelete(index) }} >x</Dele></Content>))
@@ -108,7 +115,7 @@ function Notes(props: IPropsType & ReturnType<typeof mapStateToProps> & typeof a
                 </Button>
             </Form.Item>
         </FormWrapper>
-    </>
+    </Wrapper>
 }
 
 export default connect(mapStateToProps, appMapDispatchProps)(Notes)

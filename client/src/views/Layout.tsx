@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `;
 
 const ContentMes = styled.div`
-  padding: 1em;
+  /* padding: 1em; */
 `;
 
 const HeaderTitle = styled.h1`
@@ -63,7 +63,7 @@ const _Layout = (props: RouteComponentProps) => {
               </Menu.Item>
             </Menu>
           </Sider>
-          <Content style={{ overflow: "auto", minWidth: "80vw", minHeight: "90vh" }}>
+          <Content style={{ overflow: "auto", minWidth: "80vw", minHeight: "70vh" }}>
             <ContentMes>
               <Route path="/layout" component={Notes} exact></Route>
               <Route path="/layout/movie" component={MovieList} exact></Route>

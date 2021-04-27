@@ -59,6 +59,7 @@ function Login(props: IPropsType & ILoginState & typeof appActions) {
         return () => {
             props.changeRegisterState({ isRegister: false })
         }
+        /* eslint-disable */
     }, [props.isRegister])
 
     function handleSubmit(value: ILoginDes) {
