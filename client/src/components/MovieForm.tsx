@@ -11,6 +11,7 @@ import { IMovie } from '../services/interface';
 
 const EditWrapper = styled.div`
     padding-left:100px;
+    padding-top:10px;
 `
 
 interface IAllGroups {
