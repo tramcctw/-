@@ -16,9 +16,9 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const ContentMes = styled.div`
-  padding: 1em;
-`;
+// const ContentMes = styled.div`
+//   padding: 1em;
+// `;
 
 const HeaderTitle = styled.h1`
   color: #008c8c;
@@ -64,13 +64,11 @@ const _Layout = (props: RouteComponentProps) => {
               </Menu.Item>
             </Menu>
           </Sider>
-          <Content className="scoll" style={{ overflowY: "auto", minWidth: "80vw", minHeight: "70vh" }}>
-            <ContentMes>
-              <Route path="/layout" component={Notes} exact></Route>
-              <Route path="/layout/movie" component={MovieList} exact></Route>
-              <Route path="/layout/movie/add" component={AddMovie}></Route>
-              <Route path="/layout/movie/edit/:id" component={EditMovie}></Route>
-            </ContentMes>
+          <Content className="scoll" style={{ overflowY: "auto", padding: "10px;", boxSizing: 'border-box' }}>
+            <Route path="/layout" component={Notes} exact></Route>
+            <Route path="/layout/movie" component={MovieList} exact></Route>
+            <Route path="/layout/movie/add" component={AddMovie}></Route>
+            <Route path="/layout/movie/edit/:id" component={EditMovie}></Route>
           </Content>
         </Layout>
       </Layout>

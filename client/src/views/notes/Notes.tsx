@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Input, Form, Button } from 'antd'
+import { Button } from 'antd'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { IInitAppState } from '../../redux'
@@ -7,14 +7,25 @@ import { appActions, appMapDispatchProps } from "../../redux/core";
 import { RouteComponentProps } from 'react-router'
 
 const FormWrapper = styled.div`
-    position:relative;
-    top:30px;
-    left:-130px;
-    width:500px;
+    display:flex;
+    position:absolute;
+    top:400px;
+    width:100%;
+    flex-direction:column;
+    align-items:center;
+`
+const TextArea = styled.textarea`
+    width:320px;
+    height:100px;
+    resize:none;
+    ::-webkit-scrollbar{
+        width:1px;
+    }
 `
 
 const Wrapper = styled.div`
     display:flex;
+    position:relative;
     flex-direction:column;
     justify-content:space-between;
     align-items:center;
@@ -22,8 +33,8 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.ul`
     margin-top:50px;
-    max-height:350px;
-    width:750px;
+    max-height:300px;
+    width:80%;
     overflow:auto;
     padding:0;
     ::-webkit-scrollbar{
@@ -71,7 +82,6 @@ function mapStateToProps(state: IInitAppState) {
 }
 
 function Notes(props: IPropsType & ReturnType<typeof mapStateToProps> & typeof appActions) {
-    const { TextArea } = Input
     const [noteVal, setNoteVal] = useState<string>('')
 
     useEffect(() => {
@@ -79,10 +89,6 @@ function Notes(props: IPropsType & ReturnType<typeof mapStateToProps> & typeof a
         return () => { }
         /* eslint-disable */
     }, [])
-
-    const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
-    };
 
     function handleSubmit() {
         let str = noteVal.trim()
@@ -104,16 +110,14 @@ function Notes(props: IPropsType & ReturnType<typeof mapStateToProps> & typeof a
             }
         </ContentWrapper>
         <FormWrapper>
-            <TextArea allowClear rows={4} value={noteVal} onChange={(e) => {
+            <TextArea value={noteVal} onChange={(e) => {
                 setNoteVal(e.target.value)
-            }} maxLength={100}></TextArea>
-            <Form.Item {...tailLayout}>
-                <Button type="primary" onClick={() => {
-                    handleSubmit()
-                }} style={{ marginLeft: "270px" }}>
-                    发表
-                </Button>
-            </Form.Item>
+            }}></TextArea>
+            <Button type="primary" onClick={() => {
+                handleSubmit()
+            }} style={{ marginLeft: "255px" }}>
+                发表
+            </Button>
         </FormWrapper>
     </Wrapper>
 }
